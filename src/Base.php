@@ -7,8 +7,18 @@ abstract class Base
     /**
      * @return array
      */
-    abstract public static function get(array $fields = [], array $replacements = []);
+    public static function get(array $fields = [], array $replacements = [])
+    {
+        return self::filterList(include __DIR__ . '/../data/' . static::$fileName . '.php', $fields, $replacements);
+    }
     
+    /**
+     * $fields is an array of the fields that will be returned. Empty value means
+     * all fields are returned.
+     * $replacements is an array of $oldName => $newName to replace field names.
+     *
+     * @return array
+     */
     protected static function filterList(array $list, array $fields, array $replacements)
     {
         $fields = array_fill_keys($fields, 1);
