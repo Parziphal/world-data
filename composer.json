@@ -1,0 +1,13 @@
+{
+    "name": "parziphal/world-data",
+    "description": "Countries and languages names and codes.",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Parziphal\\WorldData\\": "src/"
+        }
+    }
+}
