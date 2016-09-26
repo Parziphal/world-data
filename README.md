@@ -2,7 +2,7 @@
 
 List of countries and languages, in english. Countries have their corresponding ISO 2, ISO 3 and ISO Numeric codes; languages have their corresponding ISO 639-1 codes.
 
-There are two classes under the Parziphal\WorldData namespace: Languages and Countries. These can be used to get the data of each resource, and to optionally customize it:
+There are two classes under the `Parziphal\WorldData` namespace: `Languages` and `Countries`. These can be used to get the data of each resource, and to optionally customize it:
 
 ```php
 use Parziphal\WorldData\Countries;
@@ -10,11 +10,11 @@ use Parziphal\WorldData\Countries;
 // Get all data columns
 $countries = Countries::get();
 
-// Get only the "names" column
+// Get only country names
 $countries = Countries::get(['name']);
 
 // Get both "names" and "iso_code_2" columns, and change "iso_code_2" column name to just "iso"
-$countries = Countries::get(['name', 'iso_code_2'], ['iso_code_2' => 'iso']);
+$countries = Countries::get(['name', 'iso_code_2' => 'iso']);
 ```
 
 ### Credits
