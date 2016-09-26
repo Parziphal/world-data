@@ -7,11 +7,17 @@ abstract class Base
     /**
      * @return array
      */
-    public static function get(array $fields = [], array $replacements = [])
+    public static function get(array $fieldsAndReplacements = [])
     {
-        return self::filterList(include __DIR__ . '/../data/' . static::$fileName . '.php', $fields, $replacements);
+        $list = include __DIR__ . '/../data/' . static::$fileName . '.php';
+
+        if ($fieldsAndReplacements) {
+            $list = self::filterList($list, $fieldsAndReplacements);
+        }
+
+        return $list;
     }
-    
+
     /**
      * $fields is an array of the fields that will be returned. Empty value means
      * all fields are returned.
@@ -19,24 +25,24 @@ abstract class Base
      *
      * @return array
      */
-    protected static function filterList(array $list, array $fields, array $replacements)
+    protected static function filterList(array $list, array $fieldsAndReplacements)
     {
-        $fields = array_fill_keys($fields, 1);
-        
-        return array_map(function($row) use ($list, $fields, $replacements) {
-            if ($fields) {
-                $row = array_intersect_key($row, $fields);
-            }
-            
-            if ($replacements) {
-                foreach ($replacements as $oldName => $newName) {
-                    $row[$newName] = $row[$oldName];
-                    
-                    unset($row[$oldName]);
+        $newList = [];
+
+        foreach ($list as $row) {
+            $newRow = [];
+
+            foreach ($fieldsAndReplacements as $field => $repl) {
+                if (is_int($field)) {
+                    $newRow[$repl] = $row[$repl];
+                } else {
+                    $newRow[$repl] = $row[$field];
                 }
             }
-            
-            return $row;
-        }, $list);
+
+            $newList[] = $newRow;
+        }
+
+        return $newList;
     }
 }
